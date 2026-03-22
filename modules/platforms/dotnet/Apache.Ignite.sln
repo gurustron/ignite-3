@@ -34,6 +34,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apache.Ignite.Tests.Aot", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apache.Ignite.Tests.Common", "Apache.Ignite.Tests.Common\Apache.Ignite.Tests.Common.csproj", "{A15614D1-BDD0-477E-B553-F057BF7BA23F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Apache.Ignite.Tests.NET10", "net10\Apache.Ignite.Tests.NET10\Apache.Ignite.Tests.NET10.csproj", "{26CD661C-A05B-42C4-8651-FC0A9ED41BF1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -79,5 +81,9 @@ Global
 		{A15614D1-BDD0-477E-B553-F057BF7BA23F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A15614D1-BDD0-477E-B553-F057BF7BA23F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A15614D1-BDD0-477E-B553-F057BF7BA23F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26CD661C-A05B-42C4-8651-FC0A9ED41BF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26CD661C-A05B-42C4-8651-FC0A9ED41BF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26CD661C-A05B-42C4-8651-FC0A9ED41BF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26CD661C-A05B-42C4-8651-FC0A9ED41BF1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

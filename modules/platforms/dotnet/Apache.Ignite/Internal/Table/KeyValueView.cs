@@ -233,7 +233,7 @@ internal sealed class KeyValueView<TK, TV> : IKeyValueView<TK, TV>
     private static async IAsyncEnumerable<DataStreamerItem<KvPair<TK, TV>>> ToKv(
         IAsyncEnumerable<DataStreamerItem<KeyValuePair<TK, TV>>> pairs)
     {
-        await foreach (var pair in pairs)
+        await foreach (var pair in pairs.ConfigureAwait(false))
         {
             yield return DataStreamerItem.Create(ToKv(pair.Data), pair.OperationType);
         }
