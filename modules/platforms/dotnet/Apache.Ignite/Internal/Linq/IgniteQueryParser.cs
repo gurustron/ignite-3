@@ -25,7 +25,6 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Threading;
 using Dml;
-using Remotion.Linq.Clauses.Expressions;
 using Remotion.Linq.Parsing.ExpressionVisitors.Transformation;
 using Remotion.Linq.Parsing.ExpressionVisitors.TreeEvaluation;
 using Remotion.Linq.Parsing.Structure;
@@ -86,7 +85,7 @@ internal static class IgniteQueryParser
         return new CompoundExpressionTreeProcessor(
             new IExpressionTreeProcessor[]
             {
-                new PartialEvaluatingExpressionTreeProcessor(new CustomEvaluatableExpressionFilter()),
+                new PartialEvaluatingExpressionTreeProcessor(new IgniteEvaluatableExpressionFilter()),
                 new TransformingExpressionTreeProcessor(transformationProvider)
             });
     }
@@ -94,7 +93,7 @@ internal static class IgniteQueryParser
     /// <summary>
     /// Implementation of IEvaluatableExpressionFilter.
     /// </summary>
-    private sealed class CustomEvaluatableExpressionFilter : EvaluatableExpressionFilterBase
+    private sealed class IgniteEvaluatableExpressionFilter : EvaluatableExpressionFilterBase
     {
         // Ignores implicit ReadOnlySpan conversion to support C# 14 first class span Contains.
         public override bool IsEvaluatableMethodCall(MethodCallExpression node)
@@ -126,7 +125,10 @@ internal static class IgniteQueryParser
                 Type.MakeGenericMethodParameter(0)
             ])!;
 
-        public static bool IsSpanImplicitConversion([NotNullWhen(true)]MethodCallExpression? node) =>
+        [SuppressMessage("Performance", "CA1819:Properties should not return arrays", Justification = "Interface impl")]
+        public ExpressionType[] SupportedExpressionTypes => [ExpressionType.Call];
+
+        public static bool IsSpanImplicitConversion([NotNullWhen(true)] MethodCallExpression? node) =>
             node?.Method is { IsSpecialName: true, Name: "op_Implicit" }
             && node.Method.DeclaringType is { IsGenericType: true }
             && node.Method.DeclaringType.GetGenericTypeDefinition() == typeof(ReadOnlySpan<>);
@@ -154,11 +156,5 @@ internal static class IgniteQueryParser
 
             return expression;
         }
-
-#pragma warning disable CA1819
-#pragma warning disable SA1201
-        public ExpressionType[] SupportedExpressionTypes => [ExpressionType.Call];
-#pragma warning restore SA1201
-#pragma warning restore CA1819
     }
 }
